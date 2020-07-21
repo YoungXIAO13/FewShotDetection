@@ -332,7 +332,7 @@ if __name__ == '__main__':
         if args.phase == 2:
             new_state_dict = OrderedDict()
             # initilize params of RCNN_cls_score and RCNN_bbox_pred for second phase
-            feat_dim = 2048 * 2 if args.cat else 2048
+            feat_dim = 2048 * 2
             RCNN_cls_score = nn.Linear(feat_dim, imdb.num_classes)
             RCNN_bbox_pred = nn.Linear(feat_dim, 4) if args.class_agnostic else nn.Linear(feat_dim, 4 * imdb.num_classes)
             Meta_cls_score = nn.Linear(2048, imdb.num_classes)
