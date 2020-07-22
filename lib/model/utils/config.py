@@ -28,12 +28,6 @@ __C.VOC_CLASSES = ['airplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
                    'car', 'cat', 'chair', 'cow', 'dining table', 'dog', 'horse',
                    'motorcycle', 'person', 'potted plant', 'sheep', 'couch', 'train', 'tv']
 
-__C.NOVEL_CLASSES = ['bed', 'bookshelf', 'calculator', 'cellphone', 'computer', 'door', 'filing_cabinet', 'guitar', 'iron',
-                     'knife', 'microwave', 'pen', 'pot', 'rifle', 'shoe', 'slipper', 'stove', 'toilet', 'tub', 'wheelchair']
-
-__C.PASCAL_CLASSES = ['aeroplane', 'bicycle', 'boat', 'bottle', 'bus', 'car',
-                      'chair', 'diningtable', 'motorbike', 'sofa', 'train', 'tvmonitor']
-
 __C.TRAIN.ALLCLASSES_FIRST = ['aeroplane', 'bicycle', 'boat', 'bottle', 'car',
                               'cat', 'chair', 'diningtable', 'dog', 'horse',
                               'person', 'pottedplant', 'sheep', 'train', 'tvmonitor',
@@ -60,6 +54,11 @@ __C.TRAIN.ALLCLASSES_THIRD = ['aeroplane', 'bicycle', 'bird', 'bottle', 'bus',
 __C.TRAIN.BASECLASSES_THIRD = ['aeroplane', 'bicycle', 'bird', 'bottle', 'bus',
                                'car', 'chair', 'cow', 'diningtable', 'dog',
                                'horse', 'person', 'pottedplant', 'train', 'tvmonitor']
+
+__C.NOVEL_3D_CLASSES = ['bed', 'bookshelf', 'calculator', 'cellphone', 'computer',
+                        'door', 'filing_cabinet', 'guitar', 'iron', 'knife',
+                        'microwave', 'pen', 'pot', 'rifle', 'shoe',
+                        'slipper', 'stove', 'toilet', 'tub', 'wheelchair']
 ####
 # Momentum
 __C.TRAIN.MOMENTUM = 0.9

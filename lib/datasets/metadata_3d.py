@@ -49,12 +49,12 @@ class MetaDataset3D(data.Dataset):
         self.df = df[df.set == image_set]
 
         self._classes = tuple(['__background__'] +
-                              [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_CLASSES] +
-                              [c for c in np.unique(df.cat).tolist() if c in cfg.NOVEL_CLASSES])
+                              [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_3D_CLASSES] +
+                              [c for c in np.unique(df.cat).tolist() if c in cfg.NOVEL_3D_CLASSES])
         self.num_classes = len(self._classes)
 
         if phase == 1:
-            self.metaclass = [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_CLASSES] 
+            self.metaclass = [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_3D_CLASSES]
         else:
             self.metaclass = self._classes[1:]
         class_to_idx = dict(zip(self.metaclass, range(len(self.metaclass))))  # class to index mapping

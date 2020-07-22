@@ -38,8 +38,8 @@ class objectnet3d(imdb):
         self.df = df[df.set == 'train'] if image_set == 'shots' else df[df.set == image_set]
 
         self._classes = tuple(['__background__'] +
-                              [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_CLASSES] +
-                              [c for c in np.unique(df.cat).tolist() if c in cfg.NOVEL_CLASSES])
+                              [c for c in np.unique(df.cat).tolist() if c not in cfg.NOVEL_3D_CLASSES] +
+                              [c for c in np.unique(df.cat).tolist() if c in cfg.NOVEL_3D_CLASSES])
         print('Dataset classes :{}'.format(self._classes))
 
         self._class_to_ind = dict(zip(self.classes, xrange(self.num_classes)))

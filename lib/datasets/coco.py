@@ -64,7 +64,6 @@ class coco(imdb):
             'capval2014': 'val2014',
             'captest2014': 'val2014',
             'shots2014': 'train2014',
-            'inter2014': 'train2014',
         }
         coco_name = image_set + year  # e.g., "val2014"
         self._data_name = (self._view_map[coco_name] if coco_name in self._view_map else coco_name)

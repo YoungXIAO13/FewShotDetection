@@ -14,8 +14,6 @@ __sets = {}
 
 from datasets.coco import coco
 from datasets.pascal_voc import pascal_voc
-
-from datasets.pascal3d import pascal3d
 from datasets.objectnet3d import objectnet3d
 
 
@@ -30,13 +28,6 @@ for split in ['train', 'val', 'test', 'shots']:
     __sets[name] = (lambda split=split, data_path=data_path, csv_file=csv_file: objectnet3d(split, data_path, csv_file))
 
 
-# # Set up pascal3d_<split>
-# for split in ['train', 'val', 'test']:
-#     name = 'pascal3d_{}'.format(split)
-#     data_path = '/home/xiao/Datasets/Pascal3D'
-#     __sets[name] = (lambda split=split, data_path=data_path: pascal3d(split, data_path))
-
-
 # # Set up voc_<year>_<split>
 for year in ['2007', '2012']:
     for split in ['train', 'val', 'trainval', 'test', 'shots',
@@ -45,7 +36,7 @@ for year in ['2007', '2012']:
         __sets[name] = (lambda split=split, year=year: pascal_voc(split, year))
 
 for year in ['2014']:
-    for split in ['train', 'val', 'minival', 'valminusminival', 'trainval', 'shots', 'inter']:
+    for split in ['train', 'val', 'minival', 'valminusminival', 'trainval', 'shots']:
         name = 'coco_{}_{}'.format(year, split)
         __sets[name] = (lambda split=split, year=year: coco(split, year))
 
