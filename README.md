@@ -52,12 +52,12 @@ sh make.sh
 
 We evaluate our method on two commonly-used benchmarks:
 
-####[PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/)
+#### PASCAL VOC
  
 We use the train/val sets of PASCAL VOC 2007+2012 for training and the test set of PASCAL VOC 2007 for evaluation. 
 We split the 20 object classes into 15 base classes and 5 novel classes, and we consider 3 splits proposed in [FSRW](https://github.com/ucbdrive/few-shot-object-detection/blob/master/fsdet/data/datasets/builtin_meta.py). 
 
-* Download PASCAL VOC 2007+2012 datasets, create softlink named ``VOCdevkit`` in the folder ``data/``.
+* Download [PASCAL VOC 2007+2012](http://host.robots.ox.ac.uk/pascal/VOC/), create softlink named ``VOCdevkit`` in the folder ``data/``.
 
 * Data structure should look like:
 ```
@@ -72,12 +72,12 @@ data/VOCdevkit
 [GoogleDrive](https://drive.google.com/drive/folders/14gtxnxWokk3eO6Oe5SrEG6_R9Dt6efT8?usp=sharing) 
 and put them into VOC2007 and VOC2012 ImageSets/Main dirs.
 
-####[COCO](https://cocodataset.org/#home) 
+#### COCO
 
 We use COCO 2014 and keep the 5k images from minival set for evaluation and use the rest for training. 
 We use the 20 object classes that are the same with PASCAL VOC as novel classes and use the rest as base classes.
 
-* Download COCO 2014 dataset, create softlink named ``coco`` in the folder ``data/``.
+* Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coco`` in the folder ``data/``.
 
 * Data structure should look like:
 ```
