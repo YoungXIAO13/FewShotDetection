@@ -1,7 +1,3 @@
-# --------------------------------------------------------
-# Pytorch Meta R-CNN
-# Written by Anny Xu, Xiaopeng Yan, based on the code from Jianwei Yang
-# --------------------------------------------------------
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -386,11 +382,11 @@ if __name__ == '__main__':
     sys.stdout = f
 
     print('Evaluating detections')
-    ############################### changed by Anny Xu 2019/1/29 begin################################
     imdb.evaluate_detections(all_boxes, output_dir, **vars(args))
-    ############################## end ###########################################################
     end = time.time()
     print("test time: %0.4fs" % (end - start))
 
+
+    # You can comment the following lines to get a direct print of testing results
     sys.stdout = orig_stdout
     f.close()

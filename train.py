@@ -1,7 +1,3 @@
-# --------------------------------------------------------
-# Pytorch Meta R-CNN
-# Written by Anny Xu, Xiaopeng Yan, based on the code from Jianwei Yang
-# --------------------------------------------------------
 import _init_paths
 import os
 import sys
@@ -545,7 +541,7 @@ if __name__ == '__main__':
                 for idx, cls in enumerate(prncls):
                     class_attentions[int(cls)].append(attentions[idx])
 
-        # calculate mean attention vectors of every class
+        # calculate mean class data of every class
         mean_class_attentions = {k: sum(v) / len(v) for k, v in class_attentions.items()}
         save_path = os.path.join(output_dir, 'meta_type_{}'.format(args.meta_type))
         if not os.path.exists(save_path):
