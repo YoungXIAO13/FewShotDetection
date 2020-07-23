@@ -377,16 +377,7 @@ if __name__ == '__main__':
     with open(det_file, 'wb') as f:
         pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
 
-    orig_stdout = sys.stdout
-    f = open(os.path.join(output_dir, '{}shots_out.txt'.format(args.shots)), 'w')
-    sys.stdout = f
-
     print('Evaluating detections')
     imdb.evaluate_detections(all_boxes, output_dir, **vars(args))
     end = time.time()
     print("test time: %0.4fs" % (end - start))
-
-
-    # You can comment the following lines to get a direct print of testing results
-    sys.stdout = orig_stdout
-    f.close()

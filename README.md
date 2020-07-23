@@ -8,7 +8,7 @@
 </p>
 
 If our project is helpful for your research, please consider citing:
-```Bash
+```
 @INPROCEEDINGS{Xiao2020FSDetView,
     author    = {Yang Xiao and Renaud Marlet},
     title     = {Few-Shot Object Detetcion and Viewpoint Estimation for Objects in the Wild},
@@ -50,68 +50,83 @@ sh make.sh
 
 ## Data Preparation
 
-We evaluate our method on two commonly-used benchmarks:
+We evaluate our method on two commonly-used benchmarks. Detailed data preparation commands can be found in [data/README.md](https://github.com/YoungXIAO13/FewShotDetection/tree/master/data/README.md)
 
 ### PASCAL VOC
  
 We use the train/val sets of PASCAL VOC 2007+2012 for training and the test set of PASCAL VOC 2007 for evaluation. 
 We split the 20 object classes into 15 base classes and 5 novel classes, and we consider 3 splits proposed in [FSRW](https://github.com/ucbdrive/few-shot-object-detection/blob/master/fsdet/data/datasets/builtin_meta.py). 
 
-* Download [PASCAL VOC 2007+2012](http://host.robots.ox.ac.uk/pascal/VOC/), create softlink named ``VOCdevkit`` in the folder ``data/``.
+Download [PASCAL VOC 2007+2012](http://host.robots.ox.ac.uk/pascal/VOC/), create softlink named ``VOCdevkit`` in the folder ``data/``.
 
-* Data structure should look like:
-```
-data/VOCdevkit
-    VOC{2007,2012}/
-        Annotations/
-        ImageSets/
-        JPEGImages/
-        ...
-```
-
-* Following [MetaR-CNN](https://github.com/yanxp/MetaR-CNN), please download the three base classes splits [Baidu](https://pan.baidu.com/s/11IxGujTTegLEXFsaiohV_Q) | 
-[GoogleDrive](https://drive.google.com/drive/folders/14gtxnxWokk3eO6Oe5SrEG6_R9Dt6efT8?usp=sharing) 
-and put them into VOC2007 and VOC2012 ImageSets/Main dirs.
 
 ### COCO
 
 We use COCO 2014 and keep the 5k images from minival set for evaluation and use the rest for training. 
 We use the 20 object classes that are the same with PASCAL VOC as novel classes and use the rest as base classes.
 
-* Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coco`` in the folder ``data/``.
+Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coco`` in the folder ``data/``.
 
-* Data structure should look like:
-```
-data/coco
-    annotations/
-    images/
-        train2014/
-        val2014/
-```
 
 ## Getting Start
 
+### Base-Class Training
+
 **Pre-trained ResNet**:
-We used [ResNet101](https://www.dropbox.com/s/iev3tkbz5wyyuz9/resnet101_caffe.pth?dl=0) pretrained model on ImageNet in our experiments. 
+we used [ResNet101](https://www.dropbox.com/s/iev3tkbz5wyyuz9/resnet101_caffe.pth?dl=0) pretrained model on ImageNet in our experiments. 
 Download it and put it into the ``data/pretrained_model/``.
 
-### Command lines
+We provide pre-trained models of **base-class training**:
+```bash
+bash download_models.sh
+```
+You will get a dir like:
+```
+save_models/
+    COCO/
+    VOC_first/
+    VOC_second/
+    VOC_third/
+```
 
-Training and testing on **PASCAL_VOC**:
-```sh
+You can also train it yourself:
+```bash
 # the first split on VOC
-bash run/run1.sh
+bash run/train_voc_first.sh
 
 # the second split on VOC
-bash run/run2.sh
+bash run/train_voc_second.sh
 
 # the third split on VOC
-bash run/run3.sh
+bash run/train_voc_third.sh
+
+# NonVOC / VOC split on COCO
+bash run/train_coco.sh
 ```
 
-Training and testing on **COCO**:
-```sh
-bash run/run_coco.sh
+### Few-Shot Fine-tuning
+
+Fine-tune the base-training models on a balanced training data including both base and novel classes:
+```bash
+bash run/finetune_voc_first.sh
+
+bash run/finetune_voc_second.sh
+
+bash run/finetune_voc_third.sh
+
+bash run/finetune_coco.sh
 ```
 
-**Testing results** will be writen in ``./save_models/{exp}/{dataset_name}/Kshots_out.txt``.
+
+### Testing
+
+Evaluation is conducted on the test set of PASCAL VOC 2007 or minival set of COCO 2014:
+```bash
+bash run/test_voc_first.sh
+
+bash run/test_voc_second.sh
+
+bash run/test_voc_third.sh
+
+bash run/test_coco.sh
+```
