@@ -19,7 +19,7 @@ If our project is helpful for your research, please consider citing:
 ## Tabel of Contents
 * [Installation](#installation)
 * [Data Preparation](#data-preparation)
-* [Getting Start](#getting-start)
+* [Getting Started](#getting-started)
 
 
 ## Installation
@@ -68,7 +68,7 @@ We use the 20 object classes that are the same with PASCAL VOC as novel classes 
 Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coco`` in the folder ``data/``.
 
 
-## Getting Start
+## Getting Started
 
 ### Base-Class Training
 
