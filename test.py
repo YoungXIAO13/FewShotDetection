@@ -330,7 +330,7 @@ if __name__ == '__main__':
             detect_time = det_toc - det_tic
             misc_tic = time.time()
             if vis:
-                im = cv2.imread(imdb.image_path_at(int(data[4])))
+                im = cv2.imread(imdb.image_path_from_index(int(data[4])))
                 im2show = np.copy(im)
             for j in range(1, num_cls):
                 inds = torch.nonzero(scores[:, j] > thresh).view(-1)
@@ -369,7 +369,7 @@ if __name__ == '__main__':
             sys.stdout.flush()
 
             if vis:
-                im_dir = 'vis/' + str(data[4].numpy()[0]) + '_metarcnn.png'
+                im_dir = 'vis/' + str(data[4].numpy()[0]) + '_det.png'
                 cv2.imwrite(im_dir, im2show)
                 plt.imshow(im2show[:, :, ::-1])
                 plt.show()

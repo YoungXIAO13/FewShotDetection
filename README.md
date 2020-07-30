@@ -1,7 +1,7 @@
 # Few-Shot Object Detection
 
 (ECCV 2020) PyTorch implementation of paper "Few-Shot Object Detection and Viewpoint Estimation for Objects in the Wild"\
-[\[PDF\]](https://arxiv.org/abs/2007.12107) [\[Project webpage\]](http://imagine.enpc.fr/~xiaoy/FSDetView/)
+[\[PDF\]](https://arxiv.org/abs/2007.12107) [\[Project webpage\]](http://imagine.enpc.fr/~xiaoy/FSDetView/) [\[Code (Viewpoint)\]](https://github.com/YoungXIAO13/FewShotViewpoint)
 
 <p align="center">
 <img src="https://github.com/YoungXIAO13/FewShotDetection/blob/master/img/PipelineDet.png" width="800px" alt="teaser">
@@ -11,7 +11,7 @@ If our project is helpful for your research, please consider citing:
 ```
 @INPROCEEDINGS{Xiao2020FSDetView,
     author    = {Yang Xiao and Renaud Marlet},
-    title     = {Few-Shot Object Detetcion and Viewpoint Estimation for Objects in the Wild},
+    title     = {Few-Shot Object Detection and Viewpoint Estimation for Objects in the Wild},
     booktitle = {European Conference on Computer Vision (ECCV)},
     year      = {2020}}
 ```
