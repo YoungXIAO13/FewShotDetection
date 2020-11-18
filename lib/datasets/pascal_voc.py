@@ -90,7 +90,7 @@ class pascal_voc(imdb):
         Construct an image path from the image's "index" identifier.
         """
         # file_name = str(index).zfill(6)
-        image_path = os.path.join(self._data_path, 'JPEGImages', index + self._image_ext)
+        image_path = os.path.join(self._data_path, 'JPEGImages',  '{}{}'.format(index, self._image_ext))
         assert os.path.exists(image_path), 'Path does not exist: {}'.format(image_path)
         return image_path
 
