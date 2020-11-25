@@ -24,6 +24,9 @@ __C.TRAIN.LEARNING_RATE = 0.001
 __C.TRAIN.META_TYPE = 1
 
 ##### set classes ###
+__C.CUSTOM_NOVEL_CLASSES = ['Cls_1', 'Cls_2', 'Cls_3']
+
+
 __C.VOC_CLASSES = ['airplane', 'bicycle', 'bird', 'boat', 'bottle', 'bus',
                    'car', 'cat', 'chair', 'cow', 'dining table', 'dog', 'horse',
                    'motorcycle', 'person', 'potted plant', 'sheep', 'couch', 'train', 'tv']
