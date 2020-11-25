@@ -24,9 +24,11 @@ from model.utils.net_utils import weights_normal_init, save_net, load_net, \
     adjust_learning_rate, save_checkpoint, clip_gradient
 from model.faster_rcnn.resnet import resnet
 import pickle
+
 from datasets.metadata import MetaDataset
 from datasets.metadata_coco import MetaDatasetCOCO
 from datasets.metadata_3d import MetaDataset3D
+from datasets.custom_metadata import MetaDatasetCustom
 from collections import OrderedDict
 
 
@@ -192,6 +194,15 @@ if __name__ == '__main__':
             args.imdb_name = "voc_2007_shots"
         args.imdbval_name = "voc_2007_test"
         args.set_cfgs = ['ANCHOR_SCALES', '[8, 16, 32]', 'ANCHOR_RATIOS', '[0.5,1,2]', 'MAX_NUM_GT_BOXES', '20']
+        
+    elif args.dataset == "custom":
+        base_num = 20 # modify this to your real base class number
+        if args.phase == 1:
+            args.imdb_name = "custom_train"
+        else:
+            args.imdb_name = "custom_shots"
+        args.imdbval_name = "custom_val"
+        args.set_cfgs = ['ANCHOR_SCALES', '[8, 16, 32]', 'ANCHOR_RATIOS', '[0.5, 1, 2]', 'MAX_NUM_GT_BOXES', '50']
 
     # the number of sets of metaclass
     cfg.TRAIN.META_TYPE = args.meta_type
@@ -214,9 +225,7 @@ if __name__ == '__main__':
     if args.phase == 1:
         # First phase only use the base classes
         shots = 200
-        if args.dataset == 'object3d':
-            shots = 150
-
+        
         if args.meta_type == 1:  #  use the first sets of base classes
             metaclass = cfg.TRAIN.BASECLASSES_FIRST
         if args.meta_type == 2:  #  use the second sets of base classes
@@ -255,6 +264,11 @@ if __name__ == '__main__':
         elif args.dataset == "object3d":
             metadataset = MetaDataset3D('/home/xiao/Datasets/ObjectNet3D', 'ObjectNet3D_new.txt', img_size, 'train',
                                         shots=shots, shuffle=True, phase=args.phase)
+            metaclass = metadataset.metaclass
+            
+        elif args.dataset == "custom":
+            metadataset = MetaDatasetCustom('Custom_Dataset_Pth', 'Custom.txt', img_size, 'train',
+                                            shots=shots, shuffle=True, phase=args.phase)
             metaclass = metadataset.metaclass
 
         metaloader = torch.utils.data.DataLoader(metadataset, batch_size=1,
