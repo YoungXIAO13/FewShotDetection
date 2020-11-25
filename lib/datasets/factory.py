@@ -15,6 +15,18 @@ __sets = {}
 from datasets.coco import coco
 from datasets.pascal_voc import pascal_voc
 from datasets.objectnet3d import objectnet3d
+from datasets.custom import custom
+
+
+# Set up Custom Dataset
+for split in ['train', 'val', 'shots']:
+    name = 'custom_{}'.format(split)
+    data_path = 'Your_Dataset_Root_Path'
+    csv_file = 'Custom.txt'
+    if split == 'shots':
+        split = 'train'
+        csv_file = 'Shots.txt'
+    __sets[name] = (lambda split=split, data_path=data_path, csv_file=csv_file: custom(split, data_path, csv_file))
 
 
 # Set up objectnet3d_<split>
