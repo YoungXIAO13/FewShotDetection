@@ -16,6 +16,7 @@ from torch.autograd import Variable
 import torch.nn as nn
 import torch.optim as optim
 import pickle
+
 from roi_data_layer.roidb import combined_roidb
 from roi_data_layer.roibatchLoader import roibatchLoader
 from model.utils.config import cfg, cfg_from_file, cfg_from_list, get_output_dir
@@ -124,6 +125,10 @@ if __name__ == '__main__':
     elif args.dataset == "object3d":
         args.imdbval_name = "objectnet3d_val"
         args.set_cfgs = ['ANCHOR_SCALES', '[2, 4, 8, 16, 32]', 'ANCHOR_RATIOS', '[0.25, 0.5, 1, 2, 4]', 'MAX_NUM_GT_BOXES', '50']
+        
+    elif args.dataset == "custom":
+        args.imdbval_name = "custom_val"
+        args.set_cfgs = ['ANCHOR_SCALES', '[8, 16, 32]', 'ANCHOR_RATIOS', '[0.5, 1, 2]', 'MAX_NUM_GT_BOXES', '50']
 
     # the number of sets of metaclass
     cfg.TRAIN.META_TYPE = args.meta_type
@@ -150,10 +155,7 @@ if __name__ == '__main__':
     if args.net == 'metarcnn':
         num_layers = 101 if args.dataset == 'pascal_voc_0712' else 50
 
-        if args.dataset == 'inter':
-            num_cls = 21
-        else:
-            num_cls = imdb.num_classes
+        num_cls = imdb.num_classes
 
         fasterRCNN = resnet(num_cls, num_layers, pretrained=True, class_agnostic=args.class_agnostic,
                             meta_train=False, meta_test=args.meta_test, meta_loss=args.meta_loss)
