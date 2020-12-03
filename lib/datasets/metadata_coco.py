@@ -216,7 +216,7 @@ class MetaDatasetCOCO(data.Dataset):
                     continue
 
                 if classes[cls] >= self.shots:
-                    break
+                    continue
 
                 classes[cls] += 1
                 x1 = int(obj['clean_bbox'][0] / x_ration)
@@ -231,7 +231,6 @@ class MetaDatasetCOCO(data.Dataset):
 
                 if img_id not in valid_img_ids:
                     valid_img_ids.append(img_id)
-                break
 
             if len(classes) > 0 and min(classes.values()) == self.shots:
                 break

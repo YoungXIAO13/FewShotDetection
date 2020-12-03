@@ -156,7 +156,7 @@ class MetaDatasetCustom(data.Dataset):
                     continue
 
                 if classes[cls] >= self.shots:
-                    break
+                    continue
 
                 classes[cls] += 1
 
@@ -170,7 +170,6 @@ class MetaDatasetCustom(data.Dataset):
                 prn_mask[cls].append(mask)
 
                 valid_annot.append(objs.iloc[[ix]])
-                break
 
             if len(classes) > 0 and min(classes.values()) == self.shots:
                 break
