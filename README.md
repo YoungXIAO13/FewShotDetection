@@ -20,6 +20,7 @@ If our project is helpful for your research, please consider citing:
 * [Installation](#installation)
 * [Data Preparation](#data-preparation)
 * [Getting Started](#getting-started)
+* [Quantitative Results](#quantitative-results)
 
 
 ## Installation
@@ -130,3 +131,29 @@ bash run/test_voc_third.sh
 
 bash run/test_coco.sh
 ```
+
+
+## Quantitative Results
+
+By running multiple times (~10) the few-shot fine-tuning experiments and averaging the results, we got the performance below:
+
+**Pascal-VOC (AP@50)**
+|          | Split-1 (Base) | Split-1 (Novel) | Split-2 (Base) | Split-2 (Novel) | Split-3 (Base) | Split-3 (Novel) |
+| :------: | :------:       | :------:        | :------:       | :------:        | :------:       | :------:        |
+| K=1      |  64.2          |   24.2          |   66.9         |    21.6         |   66.7         |    21.1         |
+| K=2      |  67.8          |   35.3          |   69.9         |    24.6         |   69.1         |    30.0         |
+| K=3      |  69.4          |   42.2          |   70.8         |    31.9         |   69.9         |    37.2         |
+| K=5      |  69.8          |   49.1          |   71.4         |    37.0         |   70.9         |    43.8         |
+| K=10     |  71.1          |   57.4          |   72.2         |    45.7         |   72.2         |    49.6         |
+
+
+
+**MS-COCO**
+|          | AP (Base) | AP@50 (Base) | AP@75 (Base) | AP (Novel) | AP@50 (Novel) | AP@75 (Novel) |
+| :------: | :------:  | :------:     | :------:     | :------:   | :------:      | :------:      |
+| K=1      |  3.6      |   9.8        |   1.7        |    4.5     |   12.4        |    2.2        |
+| K=2      |  5.0      |   13.0       |   2.7        |    6.6     |   17.1        |    3.5        |
+| K=3      |  5.9      |   14.7       |   3.9        |    7.2     |   18.7        |    3.7        |
+| K=5      |  8.6      |   20.3       |   6.0        |    10.7    |   24.5        |    6.7        |
+| K=10     |  10.5     |   23.3       |   8.2        |    12.5    |   27.3        |    9.8        |
+| K=30     |  12.7     |   26.1       |   9.7        |    14.7    |   30.6        |    12.2       |
