@@ -73,7 +73,7 @@ Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coc
 ### Base-Class Training
 
 **Pre-trained ResNet**:
-we used [ResNet101](https://www.dropbox.com/s/iev3tkbz5wyyuz9/resnet101_caffe.pth?dl=0) pretrained model on ImageNet in our experiments. 
+folloing Meta R-CNN, we used [ResNet101](https://www.dropbox.com/s/iev3tkbz5wyyuz9/resnet101_caffe.pth?dl=0) for PASCAL VOC and ResNet50 for MS-COCO.
 Download it and put it into the ``data/pretrained_model/``.
 
 We provide pre-trained models of **base-class training**:

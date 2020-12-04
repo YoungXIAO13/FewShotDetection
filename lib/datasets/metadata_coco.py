@@ -216,7 +216,7 @@ class MetaDatasetCOCO(data.Dataset):
                     continue
 
                 if classes[cls] >= self.shots:
-                    continue
+                    break
 
                 classes[cls] += 1
                 x1 = int(obj['clean_bbox'][0] / x_ration)
@@ -234,6 +234,7 @@ class MetaDatasetCOCO(data.Dataset):
 
             if len(classes) > 0 and min(classes.values()) == self.shots:
                 break
+            break
 
         end = time.time()
         print('few-shot samples generated in {} s\n'.format(end - start))
