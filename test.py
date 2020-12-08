@@ -7,15 +7,11 @@ import os
 import sys
 import numpy as np
 import argparse
-import pprint
-import pdb
 import time
-import torch
 import cv2
-from torch.autograd import Variable
-import torch.nn as nn
-import torch.optim as optim
 import pickle
+import torch
+from torch.autograd import Variable
 
 from roi_data_layer.roidb import combined_roidb
 from roi_data_layer.roibatchLoader import roibatchLoader
@@ -29,14 +25,6 @@ from matplotlib import pyplot as plt
 import torch.utils.data as Data
 from model.utils.net_utils import weights_normal_init, save_net, load_net, \
     adjust_learning_rate, save_checkpoint, clip_gradient
-#from tsne import plot_embedding
-import collections
-
-import pickle
-try:
-    xrange  # Python 2
-except NameError:
-    xrange = range  # Python 3
 
 
 def parse_args():
@@ -378,6 +366,13 @@ if __name__ == '__main__':
 
     with open(det_file, 'wb') as f:
         pickle.dump(all_boxes, f, pickle.HIGHEST_PROTOCOL)
+
+    ## comment following block for a direct print on screen
+    ## ====================================================
+    orig_stdout = sys.stdout
+    f = open(os.path.join(output_dir, '{}shots_out.txt'.format(args.shots)), 'w')
+    sys.stdout = f
+    ## ====================================================
 
     print('Evaluating detections')
     imdb.evaluate_detections(all_boxes, output_dir, **vars(args))

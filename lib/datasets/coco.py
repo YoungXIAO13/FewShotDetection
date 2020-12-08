@@ -63,7 +63,7 @@ class coco(imdb):
             'valminuscapval2014': 'val2014',
             'capval2014': 'val2014',
             'captest2014': 'val2014',
-            'shots2014': 'train2014',
+            'shots2014': 'train2014'
         }
         coco_name = image_set + year  # e.g., "val2014"
         self._data_name = (self._view_map[coco_name] if coco_name in self._view_map else coco_name)
@@ -112,6 +112,13 @@ class coco(imdb):
             file_name = ('COCO_' + self._data_name + '_' + str(index).zfill(12) + '.jpg')
 
         image_path = osp.join(self._data_path, 'images', self._data_name, file_name)
+        if not osp.exists(image_path):
+            file_name = ('COCO_' + 'val2014' + '_' + str(index).zfill(12) + '.jpg')
+            image_path = osp.join(self._data_path, 'images', 'val2014', file_name)
+            if not osp.exists(image_path):
+                file_name = ('COCO_' + 'train2014' + '_' + str(index).zfill(12) + '.jpg')
+                image_path = osp.join(self._data_path, 'images', 'train2014', file_name)
+
         assert osp.exists(image_path), 'Path does not exist: {}'.format(image_path)
         return image_path
 
@@ -242,6 +249,10 @@ class coco(imdb):
             precision = coco_eval.eval['precision'][ind_lo:(ind_hi + 1), :, cls_ind - 1, 0, 2]
             ap = np.mean(precision[precision > -1])
             print('{}: {:.1f}'.format(cls, 100 * ap))
+
+        print('~~~~ Summary Base metrics ~~~~')
+        categoryId = np.arange(0, 60).tolist()
+        coco_eval.summarize(categoryId)
 
         print('~~~~ Summary Novel metrics ~~~~')
         categoryId = np.arange(60, 80).tolist()

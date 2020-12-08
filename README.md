@@ -37,13 +37,13 @@ Code built on top of [MetaR-CNN](https://github.com/yanxp/MetaR-CNN).
 
 **Build**
 
-Create conda env:
+* Create conda env:
 ```sh
 conda create --name FSdetection --file spec-file.txt
 conda activate FSdetection
 ```
 
-Compile the CUDA dependencies:
+* Compile the CUDA dependencies:
 ```sh
 cd {repo_root}/lib
 sh make.sh
@@ -51,7 +51,8 @@ sh make.sh
 
 ## Data Preparation
 
-We evaluate our method on two commonly-used benchmarks. Detailed data preparation commands can be found in [data/README.md](https://github.com/YoungXIAO13/FewShotDetection/tree/master/data/README.md)
+We evaluate our method on two commonly-used benchmarks. 
+See [data/README.md](https://github.com/YoungXIAO13/FewShotDetection/tree/master/data/README.md) for more details.
 
 ### PASCAL VOC
  
@@ -71,13 +72,13 @@ Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coc
 
 ## Getting Started
 
-### Base-Class Training
+### 1. Base-Class Training
 
 **Pre-trained ResNet**:
 folloing Meta R-CNN, we used [ResNet101](https://www.dropbox.com/s/iev3tkbz5wyyuz9/resnet101_caffe.pth?dl=0) for PASCAL VOC and ResNet50 for MS-COCO.
 Download it and put it into the ``data/pretrained_model/``.
 
-We provide pre-trained models of **base-class training**:
+* We provide pre-trained models of **base-class training**:
 ```bash
 bash download_models.sh
 ```
@@ -90,7 +91,7 @@ save_models/
     VOC_third/
 ```
 
-You can also train it yourself:
+* You can also train it yourself:
 ```bash
 # the first split on VOC
 bash run/train_voc_first.sh
@@ -105,9 +106,10 @@ bash run/train_voc_third.sh
 bash run/train_coco.sh
 ```
 
-### Few-Shot Fine-tuning
+### 2. Few-Shot Fine-tuning
 
-Fine-tune the base-training models on a balanced training data including both base and novel classes:
+Fine-tune the base-training models on a balanced training data including both base and novel classes 
+(3K instances per base class and K instances per novel class):
 ```bash
 bash run/finetune_voc_first.sh
 
@@ -119,7 +121,7 @@ bash run/finetune_coco.sh
 ```
 
 
-### Testing
+### 3. Testing
 
 Evaluation is conducted on the test set of PASCAL VOC 2007 or minival set of COCO 2014:
 ```bash
@@ -135,9 +137,12 @@ bash run/test_coco.sh
 
 ## Quantitative Results
 
+### Multiple Runs
+
 By running multiple times (~10) the few-shot fine-tuning experiments and averaging the results, we got the performance below:
 
 **Pascal-VOC (AP@50)**
+
 |          | Split-1 (Base) | Split-1 (Novel) | Split-2 (Base) | Split-2 (Novel) | Split-3 (Base) | Split-3 (Novel) |
 | :------: | :------:       | :------:        | :------:       | :------:        | :------:       | :------:        |
 | K=1      |  64.2          |   24.2          |   66.9         |    21.6         |   66.7         |    21.1         |
@@ -149,6 +154,7 @@ By running multiple times (~10) the few-shot fine-tuning experiments and averagi
 
 
 **MS-COCO**
+
 |          | AP (Base) | AP@50 (Base) | AP@75 (Base) | AP (Novel) | AP@50 (Novel) | AP@75 (Novel) |
 | :------: | :------:  | :------:     | :------:     | :------:   | :------:      | :------:      |
 | K=1      |  3.6      |   9.8        |   1.7        |    4.5     |   12.4        |    2.2        |
@@ -157,3 +163,38 @@ By running multiple times (~10) the few-shot fine-tuning experiments and averagi
 | K=5      |  8.6      |   20.3       |   6.0        |    10.7    |   24.5        |    6.7        |
 | K=10     |  10.5     |   23.3       |   8.2        |    12.5    |   27.3        |    9.8        |
 | K=30     |  12.7     |   26.1       |   9.7        |    14.7    |   30.6        |    12.2       |
+
+
+### Specific Split
+
+For a direct and quick comparison on COCO, we also run experiments using the specific few-shot sample split provided in [TFA](https://github.com/ucbdrive/few-shot-object-detection).
+
+* Download their [json files](http://dl.yf.io/fs-det/datasets/) into the annotation folder of COCO:
+```bash
+cd ./data/coco/annotations
+mkdir TFA && cd TFA
+wget -r --no-parent  http://dl.yf.io/fs-det/datasets/cocosplit/
+mv dl.yf.io/fs-det/datasets/cocosplit/ cocosplit && rm -r dl.yf.io 
+```
+
+* You will see a set of json files in format **"full_box_{K}shot_{cls}_trainval.json"** as well as 9 folders named "seed{i}"
+
+* Then you can run the command line in ``run/finetune_coco_TFA.sh`` to finish few-shot fine-tuning and testing
+
+
+**MS-COCO**
+
+We get the following results:
+
+|          | AP (Base) | AP@50 (Base) | AP@75 (Base) | AP (Novel) | AP@50 (Novel) | AP@75 (Novel) |
+| :------: | :------:  | :------:     | :------:     | :------:   | :------:      | :------:      |
+| K=1      |  2.4      |   7.0        |   1.0        |    3.2     |   8.9         |    1.4        |
+| K=2      |  4.4      |   11.9       |   2.2        |    4.9     |   13.3        |    2.3        |
+| K=3      |  4.9      |   13.6       |   2.2        |    6.7     |   18.6        |    2.9        |
+| K=5      |  7.0      |   17.5       |   4.4        |    8.1     |   20.1        |    4.4        |
+| K=10     |  9.0      |   21.2       |   6.1        |    10.7    |   25.6        |    6.5        |
+| K=30     |  12.3     |   26.4       |   10.2       |    15.9    |   31.7        |    15.1       | 
+
+**Note**: the difference between the performance of multiple runs and the performance of this specific split can be explained by the different sample configuration in the few-shot fine-tuning stage.
+As we follow the strategy proposed in [MetaR-CNN](https://github.com/yanxp/MetaR-CNN) to sample 3K instances of base class and K instances of novel class, 
+without any specific adjustment, the performance would naturally degrade when we simply use the split of [TFA](https://github.com/ucbdrive/few-shot-object-detection) where only K instances are considered for each base class.   

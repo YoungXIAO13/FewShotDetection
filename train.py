@@ -27,6 +27,8 @@ import pickle
 
 from datasets.metadata import MetaDataset
 from datasets.metadata_coco import MetaDatasetCOCO
+from datasets.metadata_TFA import MetaDatasetTFA
+
 from datasets.metadata_3d import MetaDataset3D
 from datasets.custom_metadata import MetaDatasetCustom
 from collections import OrderedDict
@@ -44,6 +46,8 @@ def parse_args():
     parser.add_argument('--net', dest='net',
                         help='metarcnn',
                         default='metarcnn', type=str)
+    parser.add_argument('--TFA', default=False, type=bool,
+                        help='use TFA split')
     # Define display and save dir
     parser.add_argument('--start_epoch', dest='start_epoch',
                         help='starting epoch',
@@ -177,7 +181,10 @@ if __name__ == '__main__':
         if args.phase == 1:
             args.imdb_name = "coco_2014_train+coco_2014_valminusminival"
         else:
-            args.imdb_name = "coco_2014_shots"
+            if args.TFA:
+                args.imdb_name = 'coco_2014_TFA{}shot'.format(args.shots)
+            else:
+                args.imdb_name = "coco_2014_shots"
         args.imdbval_name = "coco_2014_minival"
         args.set_cfgs = ['ANCHOR_SCALES', '[2, 4, 8, 16, 32]', 'ANCHOR_RATIOS', '[0.5,1,2]', 'MAX_NUM_GT_BOXES', '50']
 
@@ -249,8 +256,11 @@ if __name__ == '__main__':
         img_size = 224
 
         if args.dataset == "coco":
-            metadataset = MetaDatasetCOCO('data/coco', 'train', '2014', img_size,
-                                          shots=shots, shuffle=True, phase=args.phase, inter=(args.dataset == "inter"))
+            if args.TFA:
+                metadataset = MetaDatasetTFA('data/coco', 'train', '2014', img_size, shots=shots)
+            else:
+                metadataset = MetaDatasetCOCO('data/coco', 'train', '2014', img_size,
+                                              shots=shots, shuffle=True, phase=args.phase)
             metaclass = metadataset.metaclass
 
         elif args.dataset == 'pascal_voc_0712':
@@ -284,7 +294,7 @@ if __name__ == '__main__':
         imdb.set_roidb(roidb)
 
     # filter roidb for the second phase
-    if args.phase == 2:
+    if args.phase == 2 and not args.TFA:
         roidb = filter_class_roidb_flip(roidb, args.shots, imdb, base_num)
         ratio_list, ratio_index = rank_roidb_ratio(roidb)
         imdb.set_roidb(roidb)

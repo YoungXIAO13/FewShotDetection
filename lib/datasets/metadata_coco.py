@@ -33,11 +33,11 @@ import time
 
 
 class MetaDatasetCOCO(data.Dataset):
-    def __init__(self, root, image_set, year, img_size, shots=1, phase=1, shuffle=False, inter=False):
+    def __init__(self, root, image_set, year, img_size, shots=1, phase=1, shuffle=False):
         self.shuffle = shuffle
         self.img_size = img_size
         self.phase = phase
-        subset = 'inter' if inter else 'shots'
+        subset = 'shots'
         self.shot_path = os.path.join(root, 'annotations', 'instances_{}2014.json'.format(subset))
         self.shots = shots
         if phase == 2:
@@ -69,8 +69,7 @@ class MetaDatasetCOCO(data.Dataset):
             'valminuscapval2014': 'val2014',
             'capval2014': 'val2014',
             'captest2014': 'val2014',
-            'shots2014': 'train2014',
-            'inter2014': 'train2014'
+            'shots2014': 'train2014'
         }
         coco_name = image_set + year  # e.g., "val2014"
         self._data_name = (self._view_map[coco_name] if coco_name in self._view_map else coco_name)
