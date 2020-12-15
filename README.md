@@ -16,6 +16,10 @@ If our project is helpful for your research, please consider citing:
     year      = {2020}}
 ```
 
+## ChangeLog
+* **[Dec-15 2020]** There could be a problem for the COCO base model weight downloaded in ``download_models.sh``, please download the correct model weight from [here](https://drive.google.com/file/d/1BlpUNxuSVcictDGp5mnwiZJm2NoEtPXP/view?usp=sharing) and put it in ``save_models/COCO/``.
+
+
 ## Tabel of Contents
 * [Installation](#installation)
 * [Data Preparation](#data-preparation)
