@@ -72,6 +72,7 @@ We use COCO 2014 and keep the 5k images from minival set for evaluation and use 
 We use the 20 object classes that are the same with PASCAL VOC as novel classes and use the rest as base classes.
 
 Download [COCO 2014](https://cocodataset.org/#home), create softlink named ``coco`` in the folder ``data/``.
+Please follow the instructins [here](https://github.com/rbgirshick/py-faster-rcnn/tree/master/data) to download the [instances_minival2014.json](https://dl.dropboxusercontent.com/s/o43o90bna78omob/instances_minival2014.json.zip?dl=0) and [instances_valminusminival2014.json](https://dl.dropboxusercontent.com/s/s3tw5zcg7395368/instances_valminusminival2014.json.zip?dl=0).
 
 
 ## Getting Started
