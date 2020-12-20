@@ -215,7 +215,10 @@ class MetaDatasetCOCO(data.Dataset):
                     continue
 
                 if classes[cls] >= self.shots:
-                    break
+                    if self.phase == 2:
+                        continue
+                    else:
+                        break
 
                 classes[cls] += 1
                 x1 = int(obj['clean_bbox'][0] / x_ration)
@@ -231,9 +234,11 @@ class MetaDatasetCOCO(data.Dataset):
                 if img_id not in valid_img_ids:
                     valid_img_ids.append(img_id)
 
+                if self.phase == 1:
+                    break
+
             if len(classes) > 0 and min(classes.values()) == self.shots:
                 break
-            break
 
         end = time.time()
         print('few-shot samples generated in {} s\n'.format(end - start))
