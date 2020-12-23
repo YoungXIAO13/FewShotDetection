@@ -116,8 +116,8 @@ def filter_class_roidb_flip(roidb, shot, imdb, base_num=15):
                 continue
                 
                 # Choice 2: filtering out images containing novel classes
-                boxes = []
-                break
+                # boxes = []
+                # break
 
             # novel classes
             if class_count[cls_id] < shot and cls_id > base_num:
