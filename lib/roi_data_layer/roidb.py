@@ -112,7 +112,12 @@ def filter_class_roidb_flip(roidb, shot, imdb, base_num=15):
 
             # include novel object classes as background in the base training stage
             if shot == 0 and cls_id > base_num:
+                # Choice 1: using images containing novel classes but treating them as background
                 continue
+                
+                # Choice 2: filtering out images containing novel classes
+                boxes = []
+                break
 
             # novel classes
             if class_count[cls_id] < shot and cls_id > base_num:
