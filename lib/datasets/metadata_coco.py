@@ -40,8 +40,8 @@ class MetaDatasetCOCO(data.Dataset):
         subset = 'shots'
         self.shot_path = os.path.join(root, 'annotations', 'instances_{}2014.json'.format(subset))
         self.shots = shots
-        if phase == 2:
-            self.shots = shots * 3
+        # if phase == 2:
+        #     self.shots = shots * 3
 
         # name, paths
         self._year = year
@@ -169,10 +169,13 @@ class MetaDatasetCOCO(data.Dataset):
         prn_image = collections.defaultdict(list)
         prn_mask = collections.defaultdict(list)
         classes = collections.defaultdict(int)
-        valid_img_ids = []
 
         for cls in self.metaclass:
             classes[cls] = 0
+
+        # filter the original json file
+        new_images = []
+        new_annotations = []
 
         for img_id in self._image_index:
             im_ann = self._COCO.loadImgs(img_id)[0]
@@ -206,6 +209,7 @@ class MetaDatasetCOCO(data.Dataset):
             y_ration = float(h) / self.img_size
             x_ration = float(w) / self.img_size
             img_resize = cv2.resize(img, (self.img_size, self.img_size), interpolation=cv2.INTER_LINEAR)
+            find = False
             for obj in objs:
                 if obj['iscrowd']:
                     continue
@@ -220,6 +224,8 @@ class MetaDatasetCOCO(data.Dataset):
                     else:
                         break
 
+                find = True
+                new_annotations.append(obj)
                 classes[cls] += 1
                 x1 = int(obj['clean_bbox'][0] / x_ration)
                 y1 = int(obj['clean_bbox'][1] / y_ration)
@@ -231,28 +237,16 @@ class MetaDatasetCOCO(data.Dataset):
                 prn_image[cls].append(img_resize)
                 prn_mask[cls].append(mask)
 
-                if img_id not in valid_img_ids:
-                    valid_img_ids.append(img_id)
-
                 if self.phase == 1:
                     break
 
+            if find == True:
+                new_images.append(im_ann)
             if len(classes) > 0 and min(classes.values()) == self.shots:
                 break
 
         end = time.time()
         print('few-shot samples generated in {} s\n'.format(end - start))
-
-        # filter the original json file
-        new_images = []
-        new_annotations = []
-
-        for image in self.json_data['images']:
-            if image['id'] in valid_img_ids:
-                new_images.append(image)
-        for annotation in self.json_data['annotations']:
-            if annotation['image_id'] in valid_img_ids:
-                new_annotations.append(annotation)
 
         self.json_data['images'] = new_images
         self.json_data['annotations'] = new_annotations
