@@ -204,7 +204,7 @@ class MetaDatasetCOCO(data.Dataset):
             img = img.astype(np.float32, copy=False)
             img -= cfg.PIXEL_MEANS
 
-            mask = np.zeros((self.img_size, self.img_size), dtype=np.float32)
+            #mask = np.zeros((self.img_size, self.img_size), dtype=np.float32)
             h, w, _ = img.shape
             y_ration = float(h) / self.img_size
             x_ration = float(w) / self.img_size
@@ -231,7 +231,7 @@ class MetaDatasetCOCO(data.Dataset):
                 y1 = int(obj['clean_bbox'][1] / y_ration)
                 x2 = int(obj['clean_bbox'][2] / x_ration)
                 y2 = int(obj['clean_bbox'][3] / y_ration)
-
+                mask = np.zeros((self.img_size, self.img_size), dtype=np.float32)
                 mask[y1:y2, x1:x2] = 1
 
                 prn_image[cls].append(img_resize)
